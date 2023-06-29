@@ -1,6 +1,7 @@
 package server
 
 import (
+	"api/src/config"
 	"api/src/routers"
 	"fmt"
 	"log"
@@ -22,7 +23,7 @@ type ServerInterface interface {
 
 func (server *Server) build() {
 	server.router = routers.Create()
-	server.port = 8000
+	server.port = uint32(config.ApiPort)
 	server.address = fmt.Sprintf("http://localhost:%d", server.port)
 }
 func (server *Server) Start() {
