@@ -1,4 +1,4 @@
-package controllers
+package responses
 
 import (
 	"encoding/json"

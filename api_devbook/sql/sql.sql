@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS users(
     name varchar(50) not null,
     nick varchar(50) not null unique,
     email varchar(100) not null unique,
-    password varchar(255) not null,
+    pswrd varchar(255) not null,
     created_at timestamp default current_timestamp()
 ) ENGINE=INNODB;

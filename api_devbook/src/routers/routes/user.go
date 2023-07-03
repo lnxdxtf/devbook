@@ -15,7 +15,7 @@ var UserRoutes = []Route{
 	{
 		Uri:    "/users/{id}",
 		Method: http.MethodGet,
-		Fn:     controllers.GetById,
+		Fn:     controllers.Get,
 		Auth:   false,
 	},
 	{
@@ -27,7 +27,7 @@ var UserRoutes = []Route{
 	{
 		Uri:    "/users/{id}",
 		Method: http.MethodPut,
-		Fn:     controllers.UpdateById,
+		Fn:     controllers.Update,
 		Auth:   false,
 	},
 	{
