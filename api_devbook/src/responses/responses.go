@@ -21,6 +21,17 @@ func ResponseHandler(w http.ResponseWriter, code int, output interface{}) {
 	w.Write(response)
 }
 
-func ResponseError(w http.ResponseWriter, code int, err error) {
-	ResponseHandler(w, code, ErrorResponse{Error: err.Error()})
+func ResponseError(w http.ResponseWriter, code int, err interface{}) {
+	switch e := err.(type) {
+	case error:
+		ResponseHandler(w, code, ErrorResponse{Error: e.Error()})
+	case []error:
+		var errMessages []string
+		for _, err := range e {
+			errMessages = append(errMessages, err.Error())
+		}
+		ResponseHandler(w, code, ErrorResponse{Error: errMessages})
+	default:
+		ResponseHandler(w, code, ErrorResponse{Error: "an unexpected error occurred"})
+	}
 }

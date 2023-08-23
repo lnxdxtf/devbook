@@ -11,7 +11,8 @@ import (
 
 var (
 	MySQLStrConn = ""
-	ApiPort      = 0000
+	ApiPort      = 8000
+	JwtSecretKey []byte // For signing JWT tokens
 )
 
 func LoadEnv() {
@@ -19,7 +20,11 @@ func LoadEnv() {
 	if err = godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
+
 	ApiPort, err = strconv.Atoi(os.Getenv("API_PORT"))
+
+	JwtSecretKey = []byte(os.Getenv("JWT_SECRET_KEY"))
+
 	if err != nil {
 		ApiPort = 8000
 	}
