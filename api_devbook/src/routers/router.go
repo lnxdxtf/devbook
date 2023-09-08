@@ -18,12 +18,17 @@ func config(r *mux.Router) *mux.Router {
 
 	for _, route := range routesPckg {
 		if route.Auth {
-			r.HandleFunc(route.Uri, middlewares.LoggerMiddleware(
-				middlewares.AuthMiddleware(route.Fn),
-			)).Methods(route.Method)
+			r.HandleFunc(route.Uri,
+				middlewares.LoggerMiddleware(
+					middlewares.AuthMiddleware(route.Fn),
+				),
+			).Methods(route.Method)
 			continue
+
 		} else {
-			r.HandleFunc(route.Uri, middlewares.LoggerMiddleware(route.Fn)).Methods(route.Method)
+			r.HandleFunc(route.Uri,
+				middlewares.LoggerMiddleware(route.Fn),
+			).Methods(route.Method)
 		}
 	}
 	return r
