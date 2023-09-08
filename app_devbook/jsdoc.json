@@ -1,0 +1,9 @@
+{
+    "source": {
+        "include": ["."],
+        "includePattern": ".(jsx|js|ts|tsx)$"
+    },
+    "plugins": [
+        "node_modules/tsd-jsdoc/dist/plugin"
+    ]
+}

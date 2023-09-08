@@ -68,3 +68,15 @@ func keyChecker(token *jwt.Token) (interface{}, error) {
 	}
 	return config.JwtSecretKey, nil
 }
+
+// A function AuthTokenExtractExpTime that return the timestamp of the token expiration time. The parameter is the token string.
+func AuthTokenExtractExpTime(tokenStr string) (int64, error) {
+	token, err := jwt.Parse(tokenStr, keyChecker)
+	if err != nil {
+		return 0, err
+	}
+	if permissions, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return int64(permissions["exp"].(float64)), nil
+	}
+	return 0, errors.New("invalid token")
+}

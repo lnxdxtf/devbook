@@ -1,0 +1,20 @@
+{
+    "menu": [
+        {
+            "name": "My Profile",
+            "path": "",
+            "auth": true
+        },
+        {
+            "name": "My Posts",
+            "path": "profile/posts",
+            "auth": true
+        },
+        {
+            "name": "Followers",
+            "path": "profile/followers",
+            "auth": true
+        }
+        
+    ]
+}

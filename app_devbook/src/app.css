@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.input-devbook-login input {
+    @apply bg-devbook-input-light dark:bg-devbook-input-dark rounded-md border-none focus:ring-devbook-light-accent dark:focus:ring-devbook-dark-accent ease-linear duration-200;
+}

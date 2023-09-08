@@ -46,7 +46,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		responses.ResponseError(w, http.StatusInternalServerError, err)
 		return
 	}
-	tokenData := map[string]string{"token": token}
+	tokenData := map[string]interface{}{"token": token}
+	tokenEXP, err := auth.AuthTokenExtractExpTime(token)
+	if err != nil {
+		responses.ResponseError(w, http.StatusInternalServerError, err)
+		return
+	}
+	tokenData["exp"] = tokenEXP
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: tokenData})
 }
 

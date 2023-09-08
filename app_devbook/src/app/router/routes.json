@@ -1,0 +1,26 @@
+[
+    {
+        "path": "/",
+        "name": "Feed",
+        "auth": false,
+        "component": "Feed",
+        "dynamic": false,
+        "meta": {}
+    },
+    {
+        "path": "/profile/:id",
+        "name": "Profile",
+        "auth": true,
+        "component": "Profile",
+        "dynamic": true,
+        "meta": {}
+    },
+    {
+        "path": "/login",
+        "name": "Login",
+        "auth": false,
+        "component": "Login",
+        "dynamic": false,
+        "meta": {}
+    }
+]

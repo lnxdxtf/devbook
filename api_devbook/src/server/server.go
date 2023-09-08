@@ -2,6 +2,7 @@ package server
 
 import (
 	"api/src/config"
+	"api/src/middlewares"
 	"api/src/routers"
 	"fmt"
 	"log"
@@ -25,6 +26,8 @@ func (server *Server) build() {
 	server.router = routers.Create()
 	server.port = uint32(config.ApiPort)
 	server.address = fmt.Sprintf("http://localhost:%d", server.port)
+	server.router.Use(middlewares.CorsMiddleware)
+	server.router.Use(mux.CORSMethodMiddleware(server.router))
 }
 func (server *Server) Start() {
 	server.build()

@@ -16,7 +16,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Not Authenticated
 func Create(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -50,7 +49,6 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusCreated, responses.Response{Data: user})
 }
 
-// Authenticated
 func GetAll(w http.ResponseWriter, r *http.Request) {
 	nameOrNick := "%" + strings.ToLower(r.URL.Query().Get("nick")) + "%"
 	repository, err := user_repository.NewRepository()
@@ -66,7 +64,6 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: result})
 }
 
-// Authenticated
 func Get(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.ParseUint(params["id"], 10, 64)
@@ -87,7 +84,6 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: result})
 }
 
-// Authenticated
 func Update(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.ParseUint(params["id"], 10, 64)
@@ -134,8 +130,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusNoContent, nil)
 }
 
-// Authenticated
-func DeleteById(w http.ResponseWriter, r *http.Request) {
+func Delete(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.ParseUint(params["id"], 10, 64)
 	if err != nil {
@@ -166,7 +161,6 @@ func DeleteById(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Authenticated
 func Follow(w http.ResponseWriter, r *http.Request) {
 	// User that will follow - Follower
 	followerID, err := auth.AuthTokenExtractDataUser(r)
@@ -197,7 +191,6 @@ func Follow(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusNoContent, nil)
 }
 
-// Authenticated
 func Unfollow(w http.ResponseWriter, r *http.Request) {
 	// User that will follow - Follower
 	followerID, err := auth.AuthTokenExtractDataUser(r)
@@ -229,7 +222,6 @@ func Unfollow(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// Authenticated
 func GetUserFollowers(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["id"], 10, 64)
@@ -251,7 +243,6 @@ func GetUserFollowers(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: result})
 }
 
-// Authenticated
 func GetUserFollowing(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["id"], 10, 64)
@@ -274,7 +265,6 @@ func GetUserFollowing(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: result})
 }
 
-// Authenticated
 func UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userID, err := strconv.ParseUint(params["id"], 10, 64)

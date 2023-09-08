@@ -33,7 +33,7 @@ var UserRoutes = []Route{
 	{
 		Uri:    "/users/{id}",
 		Method: http.MethodDelete,
-		Fn:     controllers_user.DeleteById,
+		Fn:     controllers_user.Delete,
 		Auth:   true,
 	},
 	{

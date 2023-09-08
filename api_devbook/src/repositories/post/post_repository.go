@@ -81,3 +81,85 @@ func (r *Repository) GetAll(userID uint) ([]models_post.Post, error) {
 	}
 	return posts, nil
 }
+
+func (r *Repository) Update(id uint, post models_post.Post) error {
+	statement, err := r.db.Prepare("UPDATE devbook.posts SET title = ?, content = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+
+	if _, err = statement.Exec(post.Title, post.Content, id); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *Repository) Delete(id uint) error {
+	statement, err := r.db.Prepare("DELETE FROM devbook.posts WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Repository) GetUserPosts(id uint) ([]models_post.Post, error) {
+	rows, err := r.db.Query(`
+		SELECT p.id, p.title, p.content, p.author_id, p.likes, p.created_at, u.nick FROM devbook.posts p
+		INNER JOIN devbook.users u ON u.id = p.author_id
+		WHERE u.id = ?
+	`, id)
+	if err != nil {
+		return []models_post.Post{}, err
+	}
+	defer rows.Close()
+
+	var posts []models_post.Post
+	for rows.Next() {
+		var post models_post.Post
+		if err = rows.Scan(&post.ID, &post.Title, &post.Content, &post.AuthorID, &post.Likes, &post.CreatedAt, &post.AuthorNick); err != nil {
+			return []models_post.Post{}, nil
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
+
+func (r *Repository) Like(id uint) error {
+	statement, err := r.db.Prepare("UPDATE devbook.posts SET likes = likes + 1 WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Repository) Unlike(id uint) error {
+	statement, err := r.db.Prepare(`
+	UPDATE devbook.posts SET likes =
+		CASE WHEN likes > 0 
+		THEN likes - 1
+		ELSE likes END
+	WHERE id = ?
+	`)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(id); err != nil {
+		return err
+	}
+	return nil
+}

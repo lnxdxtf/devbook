@@ -1,1 +1,10 @@
-docker run -d -p 3306:3306 --name go-mysql -e MYSQL_ROOT_PASSWORD=root mysql
+# DEVBOOK
+
+## Running:
+```bash
+ docker-compose up 
+```
+
+- MYSQL DATABASE
+- API DEVBOOK
+- FRONTEND DEVBOOK
