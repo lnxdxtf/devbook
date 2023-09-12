@@ -1,15 +1,32 @@
 <template>
     <div>
-        <div class="w-full flex items-center gap-4 dark:text-white text-2xl lg:p-4 lg:bg-devbook-light-shades lg:dark:bg-devbook-dark-shades">
+        <div
+            class="w-full flex justify-between items-center gap-4 dark:text-white text-2xl lg:p-4 lg:bg-devbook-light-shades lg:dark:bg-devbook-dark-shades">
 
-            <div class="text-xl font-bold">DEVBOOK</div>
+            <div @click="navigateToPage('/')" class="w-2/4 flex items-center justify-start">
+                <div class="text-xl font-bold cursor-pointer">DEVBOOK</div>
+            </div>
 
-            
+            <div class="w-2/4 flex items-center justify-end">
+                <button @click="navigateToPage('/login')" class="px-4 py-2 rounded-md text-xl bg-black bg-opacity-0 hover:bg-opacity-10">
+                    Login
+                </button>
+            </div>
+
+
+
         </div>
     </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { Component, Vue, toNative } from 'vue-facing-decorator';
+@Component({})
+class TopBar extends Vue {
+
+    navigateToPage(page: string) {
+        this.$router.push(page);
+    }
 
 }
+export default toNative(TopBar)
 </script>

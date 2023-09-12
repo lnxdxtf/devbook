@@ -9,14 +9,15 @@
                     </div>
                     <div class="w-full flex flex-col">
                         <span>Email</span>
-                        <input class="text-black" type="text">
+                        <input v-model="email" class="text-black dark:text-white" type="text">
                     </div>
                     <div class="w-full flex flex-col">
                         <span>Password</span>
-                        <input class="text-black" type="text">
+                        <input v-model="pswrd" class="text-black dark:text-white" type="text">
                     </div>
                     <div class="w-full flex justify-center p-4">
-                        <div class="w-3/4 p-2 flex justify-center items-center bg-devbook-light-accent dark:bg-devbook-dark-accent rounded-md cursor-pointer hover:hue-rotate-15 ease-linear duration-150">
+                        <div @click="login"
+                            class="w-3/4 p-2 flex justify-center items-center bg-devbook-light-accent dark:bg-devbook-dark-accent rounded-md cursor-pointer hover:hue-rotate-15 ease-linear duration-150">
                             <span class="text-2xl text-white">Login</span>
                         </div>
                     </div>
@@ -25,8 +26,13 @@
         </div>
     </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { Component, Vue, toNative } from 'vue-facing-decorator';
+import LoginMixin from './loginMixin'
 
-}
+@Component({
+    mixins: [LoginMixin]
+})
+class Login extends Vue { }
+export default toNative(Login)
 </script>

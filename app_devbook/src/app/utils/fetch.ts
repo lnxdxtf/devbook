@@ -1,11 +1,14 @@
+import { NotificationError } from "./notification"
+
 export interface ResponseJsonSuccess {
-    data: Object
+    data: any
 }
 
 export interface ResponseJsonError {
-    error?: string | Object,
-    errors?: string[] | Object | Object[]
+    error?: string | any,
+    errors?: string[] | any | any[]
 }
+
 
 export enum Method {
     GET = 'GET',
@@ -17,22 +20,24 @@ export enum Method {
 
 export interface RequestOptions {
     path: string,
-    method: Method,
-    headers?: HeadersInit,
+    method: Method | string,
+    headers?: Headers | any,
     body?: BodyInit | Object
 }
 
 export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<ResponseJsonSuccess | ResponseJsonError> {
-    if (!req_opt.headers) {
-        let baseHeaders: Headers
+    let baseHeaders: Headers | any
+    if (req_opt.headers) {
+        baseHeaders = { 'Content-Type': 'application/json' }
+        Object.assign(baseHeaders, req_opt.headers)
+    } else {
         baseHeaders = new Headers()
         baseHeaders.append('Content-Type', 'application/json')
-        req_opt.headers = baseHeaders
     }
 
     const options = {
         method: req_opt.method,
-        headers: req_opt.headers,
+        headers: baseHeaders,
         body: req_opt.body ? JSON.stringify(req_opt.body) : undefined,
     }
 
@@ -45,6 +50,7 @@ export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<Response
             try {
                 return await response.json() as ResponseJsonError
             } catch (error) {
+                NotificationError('Error from frontend application, please try again later')
                 return {
                     error: 'Error from frontend application',
                     errors: [error],
@@ -52,6 +58,7 @@ export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<Response
             }
         }
     } catch (error) {
+        NotificationError('Error from frontend application or network error, please try again later')
         return {
             error: 'Error from frontend application or network error',
             errors: [error],

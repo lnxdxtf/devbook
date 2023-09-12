@@ -12,7 +12,7 @@ type Post struct {
 	Content    string    `json:"content,omitempty"`
 	AuthorID   uint      `json:"author_id,omitempty"`
 	AuthorNick string    `json:"author_nick,omitempty"`
-	Likes      uint      `json:"likes"`
+	Likes      uint      `json:"likes,omitempty"`
 	CreatedAt  time.Time `json:"created_at,omitempty"`
 }
 

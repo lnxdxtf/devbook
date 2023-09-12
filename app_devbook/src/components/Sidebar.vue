@@ -6,16 +6,19 @@
 
    </div>
 </template>
-<script>
+<script lang="ts">
 import SideBarMobile from './mobile/SideBarMobile.vue'
 import SideBarDesktop from './desktop/SideBarDesktop.vue'
-import { mapState } from 'vuex';
-export default {
+import { Component, Vue, toNative } from 'vue-facing-decorator';
+import store from '../app/store/store';
+
+@Component({
    components: { SideBarMobile, SideBarDesktop },
-   computed: {
-      ...mapState({
-         isMobile: state => state.isMobile
-      })
+})
+class SideBar extends Vue {
+   get isMobile() {
+      return store.state.isMobile
    }
 }
+export default toNative(SideBar)
 </script>

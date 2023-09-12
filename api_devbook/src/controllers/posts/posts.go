@@ -72,6 +72,22 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: posts})
 }
 
+func GetRandom(w http.ResponseWriter, r *http.Request) {
+	repository, err := post_repository.NewRepository()
+	if err != nil {
+		responses.ResponseError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	post, err := repository.GetRandom()
+	if err != nil {
+		responses.ResponseError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: post})
+}
+
 func Get(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	postID, err := strconv.ParseUint(params["id"], 10, 64)

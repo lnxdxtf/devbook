@@ -15,6 +15,7 @@ export interface PostDevBookAPI {
 export interface UserDevBookAPI {
     id?: number,
     name?: string,
+    nick?: string,
     email?: string,
     token?: string,
     created_at?: string | Date,
@@ -30,5 +31,5 @@ export interface UserDevBook extends UserDevBookAPI {
 
 export interface LoginFormDevBookAPI {
     email: string,
-    password: string,
+    pswrd: string,
 }

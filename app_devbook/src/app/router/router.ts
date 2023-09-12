@@ -2,7 +2,7 @@ import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import routes from './routes.json'
 
 function LazyLoaderPage(pageName: string) {
-    return import(`../../pages/${pageName}.vue`)
+    return import(`../../pages/${pageName}/${pageName}.vue`)
 }
 
 const dynamicRoutes: RouteRecordRaw[] = routes.map(r => {

@@ -7,6 +7,12 @@ import (
 
 var PostRoutes = []Route{
 	{
+		Uri:    "/posts/random",
+		Method: http.MethodGet,
+		Fn:     controllers_post.GetRandom,
+		Auth:   false,
+	},
+	{
 		Uri:    "/posts",
 		Method: http.MethodPost,
 		Fn:     controllers_post.Create,

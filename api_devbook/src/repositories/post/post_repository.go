@@ -82,6 +82,29 @@ func (r *Repository) GetAll(userID uint) ([]models_post.Post, error) {
 	return posts, nil
 }
 
+func (r *Repository) GetRandom() ([]models_post.Post, error) {
+	rows, err := r.db.Query(`
+		SELECT p.id, p.title, p.content, p.author_id, p.likes, p.created_at, u.nick FROM devbook.posts p
+		INNER JOIN devbook.users u ON u.id = p.author_id
+		ORDER BY RAND()
+		LIMIT 10
+	`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []models_post.Post
+	for rows.Next() {
+		var post models_post.Post
+		if err = rows.Scan(&post.ID, &post.Title, &post.Content, &post.AuthorID, &post.Likes, &post.CreatedAt, &post.AuthorNick); err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
+
 func (r *Repository) Update(id uint, post models_post.Post) error {
 	statement, err := r.db.Prepare("UPDATE devbook.posts SET title = ?, content = ? WHERE id = ?")
 	if err != nil {

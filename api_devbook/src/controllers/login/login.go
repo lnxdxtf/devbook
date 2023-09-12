@@ -46,14 +46,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		responses.ResponseError(w, http.StatusInternalServerError, err)
 		return
 	}
-	tokenData := map[string]interface{}{"token": token}
+	data := map[string]interface{}{"token": token}
 	tokenEXP, err := auth.AuthTokenExtractExpTime(token)
 	if err != nil {
 		responses.ResponseError(w, http.StatusInternalServerError, err)
 		return
 	}
-	tokenData["exp"] = tokenEXP
-	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: tokenData})
+	data["exp"] = tokenEXP
+	data["id"] = userFound.ID
+
+	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: data})
 }
 
 func authChecker(userFound models_user.User, userToCheck models_user.User) bool {
