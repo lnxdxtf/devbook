@@ -13,7 +13,7 @@
                     </div>
                     <div class="w-full flex flex-col">
                         <span>Password</span>
-                        <input v-model="pswrd" class="text-black dark:text-white" type="text">
+                        <input v-model="pswrd" class="text-black dark:text-white" type="password">
                     </div>
                     <div class="w-full flex justify-center p-4">
                         <div @click="login"

@@ -13,8 +13,11 @@ class LoginMixin extends Vue {
             NotificationError('Email and password are required, please fill them')
             return
         }
-        await store.dispatch('user/LoginAction', { email: this.email, pswrd: this.pswrd } as LoginFormDevBookAPI)
-        this.$router.push('/')
+        const login_ok = await store.dispatch('user/LoginAction', { email: this.email, pswrd: this.pswrd } as LoginFormDevBookAPI)
+        if (login_ok) {
+            return this.$router.push('/')
+        }
+        this.pswrd = ''
     }
 
 }

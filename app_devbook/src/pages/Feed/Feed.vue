@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="w-full h-full flex flex-col gap-4 p-4">
-            <Post v-for="post in feed" :key="post.id" :post="post" />
+            <Post v-for="post in feed" :key="post.id" :post="post" :devbookCDN="devbookCDN"/>
         </div>
     </div>
 </template>

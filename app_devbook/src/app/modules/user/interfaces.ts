@@ -22,7 +22,7 @@ export interface UserDevBookAPI {
 }
 
 export interface UserDevBook extends UserDevBookAPI {
-    login(form: LoginFormDevBookAPI): Promise<void>,
+    login(form: LoginFormDevBookAPI): Promise<boolean>,
     logout?(): Promise<void>,
     getUserPosts?(): Promise<PostDevBookAPI[]>,
     editUserPost?(post: PostDevBookAPI): Promise<void>,

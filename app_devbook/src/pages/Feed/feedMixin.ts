@@ -9,6 +9,9 @@ class FeedMixin extends Vue {
     get feed() {
         return store.state.user.feed
     }
+    get devbookCDN() {
+        return store.state.devbookCDN
+    }
     async beforeMount() {
         await store.dispatch('user/GetFeed')
     }

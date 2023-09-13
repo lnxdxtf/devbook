@@ -24,6 +24,7 @@ type User struct {
 	Nick      string    `json:"nick,omitempty"`
 	Email     string    `json:"email,omitempty"`
 	Pswrd     string    `json:"pswrd,omitempty"`
+	ImageBase64 string  `json:"image_base64,omitempty"` // Used only in create and update user images
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 

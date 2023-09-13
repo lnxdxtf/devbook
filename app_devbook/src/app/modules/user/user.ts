@@ -24,7 +24,7 @@ export default class User implements UserDevBook {
     created_at?: string | Date;
 
 
-    async login(form: LoginFormDevBookAPI) {
+    async login(form: LoginFormDevBookAPI): Promise<boolean> {
         try {
             const response = await fetchAPIDevBook({ method: Method.POST, path: '/login', body: form } as RequestOptions) as ResponseJsonSuccess
             this.id = response.data.id
@@ -37,12 +37,15 @@ export default class User implements UserDevBook {
                 this.created_at = userDataResponse.data.created_at
                 this.nick = userDataResponse.data.nick
                 NotificationSuccess('Login successful')
+                return true
             } else {
                 NotificationError('Could not login, please try again later')
+                return false
             }
         } catch (error) {
             console.log(error)
             NotificationError('Error attempting to login, please try again later')
+            return false
         }
 
 

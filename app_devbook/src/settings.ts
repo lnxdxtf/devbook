@@ -3,6 +3,7 @@ import router from "./app/router/router";
 import store from "./app/store/store";
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import { timePassed } from "./app/utils/directives/time";
 
 async function settings(app: App<Element>) {
     // Plugins
@@ -13,6 +14,8 @@ async function settings(app: App<Element>) {
         timeout: 4000,
         transition: "Vue-Toastification__slideBlurred",
     })
+
+    app.directive('timePassed', timePassed)
     setListeners()
 }
 

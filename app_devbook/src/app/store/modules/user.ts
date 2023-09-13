@@ -22,8 +22,11 @@ export default ({
     actions: {
         async LoginAction({ commit }: { commit: any, state: any }, loginData: LoginFormDevBookAPI) {
             let user = new User()
-            await user.login(loginData)
-            commit('SET_USER', user)
+            if (await user.login(loginData)) {
+                commit('SET_USER', user)
+                return true
+            }
+            return false
         },
 
         async LogoutAction({ commit }: { commit: any }) {
