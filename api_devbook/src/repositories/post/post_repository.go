@@ -87,7 +87,7 @@ func (r *Repository) GetRandom() ([]models_post.Post, error) {
 		SELECT p.id, p.title, p.content, p.author_id, p.likes, p.created_at, u.nick FROM devbook.posts p
 		INNER JOIN devbook.users u ON u.id = p.author_id
 		ORDER BY RAND()
-		LIMIT 10
+		LIMIT 25
 	`)
 	if err != nil {
 		return nil, err

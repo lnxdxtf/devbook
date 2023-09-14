@@ -6,3 +6,15 @@
 .input-devbook-login input {
     @apply bg-devbook-input-light dark:bg-devbook-input-dark rounded-md border-none focus:ring-devbook-light-accent dark:focus:ring-devbook-dark-accent ease-linear duration-200;
 }
+
+.hidden-scroll {
+    -ms-overflow-style: none;
+    /* IE e Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    /* Chrome, Safari e Opera */
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+}

@@ -43,40 +43,41 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	base64Data := user.ImageBase64
-	if strings.Contains(base64Data, ",") {
-		base64Data = strings.Split(base64Data, ",")[1]
-	}
-	decodeBase64Img, err := base64.StdEncoding.DecodeString(base64Data)
-	if err != nil {
-		responses.ResponseError(w, http.StatusInternalServerError, err)
-		return
-	}
 	result, err := repository.Insert(user)
 	if err != nil {
 		responses.ResponseError(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	s3Service, err := aws_devbook_s3.NewS3Service()
-	if err != nil {
-		responses.ResponseError(w, http.StatusInternalServerError, err)
-		return
+	if user.ImageBase64 != "" {
+
+		base64Data := user.ImageBase64
+		if strings.Contains(base64Data, ",") {
+			base64Data = strings.Split(base64Data, ",")[1]
+		}
+		decodeBase64Img, err := base64.StdEncoding.DecodeString(base64Data)
+		if err != nil {
+			responses.ResponseError(w, http.StatusInternalServerError, err)
+			return
+		}
+		s3Service, err := aws_devbook_s3.NewS3Service()
+		if err != nil {
+			responses.ResponseError(w, http.StatusInternalServerError, err)
+			return
+		}
+
+		upload := aws_devbook_s3.UploadInput{
+			File_name: fmt.Sprintf("user/profile/imgs/user_%d.png", result),
+			File_type: "image/png",
+			File_body: decodeBase64Img,
+		}
+		if err = s3Service.Upload(upload); err != nil {
+			responses.ResponseError(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
-	upload := aws_devbook_s3.UploadInput{
-		File_name: fmt.Sprintf("user/profile/imgs/user_%d.png", result),
-		File_type: "image/png",
-		File_body: decodeBase64Img,
-	}
-
-	if err = s3Service.Upload(upload); err != nil {
-		responses.ResponseError(w, http.StatusInternalServerError, err)
-		return
-	}
-
-	user.ID = result
-	responses.ResponseHandler(w, http.StatusCreated, responses.Response{Data: user})
+	responses.ResponseHandler(w, http.StatusCreated, responses.Response{Data: result})
 }
 
 func GetAll(w http.ResponseWriter, r *http.Request) {

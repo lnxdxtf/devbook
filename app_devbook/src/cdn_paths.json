@@ -1,0 +1,9 @@
+{
+    "imgs": {
+        "user": {
+            "profile": "/user/profile/imgs"
+        },
+        "post": "/user/post/imgs"
+    },
+    "videos": {}
+}

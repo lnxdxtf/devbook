@@ -13,6 +13,7 @@ type Post struct {
 	AuthorID   uint      `json:"author_id,omitempty"`
 	AuthorNick string    `json:"author_nick,omitempty"`
 	Likes      uint      `json:"likes,omitempty"`
+	ImageBase64 string  `json:"image_base64,omitempty"` // Used only in create and update post images
 	CreatedAt  time.Time `json:"created_at,omitempty"`
 }
 
