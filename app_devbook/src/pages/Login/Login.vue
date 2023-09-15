@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="w-full h-full flex justify-center items-center text-black dark:text-white input-devbook-login">
-            <div class="w-2/5 flex p-2">
+            <div class="w-full lg:w-2/5 flex p-2">
 
                 <div class="w-full flex flex-col gap-2 p-4 bg-white dark:bg-zinc-700 rounded-md">
+
                     <div class="w-full p-4 flex items-center justify-center">
                         <span class="text-4xl font-bold">Login</span>
                     </div>
@@ -21,7 +22,9 @@
                             <span class="text-2xl text-white">Login</span>
                         </div>
                     </div>
+                    
                 </div>
+
             </div>
         </div>
     </div>

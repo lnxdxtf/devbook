@@ -8,9 +8,14 @@
             </div>
 
             <div class="w-2/4 flex items-center justify-end">
-                <button @click="navigateToPage('/login')" class="px-4 py-2 rounded-md text-xl bg-black bg-opacity-0 hover:bg-opacity-10">
-                    Login
-                </button>
+                <div class="flex flex-col">
+                    <button @click="navigateToPage('/login')" class="px-4 py-1 rounded-md text-xl bg-black bg-opacity-0 hover:bg-opacity-10">
+                        Login
+                    </button>
+                    <button @click="navigateToPage('/register')" class="rounded-md text-xs">
+                        Register
+                    </button>
+                </div>
             </div>
 
 

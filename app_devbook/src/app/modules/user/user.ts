@@ -1,6 +1,6 @@
 import { Method, RequestOptions, ResponseJsonSuccess, fetchAPIDevBook } from "../../utils/fetch";
 import { NotificationError, NotificationSuccess } from "../../utils/notification";
-import { LoginFormDevBookAPI, UserDevBook } from "./interfaces";
+import { LoginFormDevBookAPI, RegisterFormDevBookAPI, UserDevBook } from "./interfaces";
 /**
  * User class.
  * It implements the UserDevBookAPI interface.
@@ -70,6 +70,22 @@ export default class User implements UserDevBook {
         delete this.email
         delete this.token
         delete this.created_at
+    }
+
+    async register(form: RegisterFormDevBookAPI): Promise<boolean> {
+        try {
+            const response = await fetchAPIDevBook({ method: Method.POST, path: '/users', body: form } as RequestOptions) as ResponseJsonSuccess
+            if (response.data) {
+                return true
+            }
+            NotificationError("Could not register, please try again later")
+            return false
+
+        } catch (err) {
+            console.log(err)
+            NotificationError("Could not register, please try again later")
+            return false
+        }
     }
 
 }

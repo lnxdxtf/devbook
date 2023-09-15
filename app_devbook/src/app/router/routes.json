@@ -22,5 +22,13 @@
         "component": "Login",
         "dynamic": false,
         "meta": {}
+    },
+    {
+        "path": "/register",
+        "name": "Register",
+        "auth": false,
+        "component": "Register",
+        "dynamic": false,
+        "meta": {}
     }
 ]
