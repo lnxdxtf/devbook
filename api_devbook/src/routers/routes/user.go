@@ -7,6 +7,12 @@ import (
 
 var UserRoutes = []Route{
 	{
+		Uri:    "/users/random",
+		Method: http.MethodGet,
+		Fn:     controllers_user.GetRandom,
+		Auth:   false,
+	},
+	{
 		Uri:    "/users",
 		Method: http.MethodGet,
 		Fn:     controllers_user.GetAll,

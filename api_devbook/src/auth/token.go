@@ -17,7 +17,7 @@ func AuthTokenGen(user models_user.User) (string, error) {
 	permissions := jwt.MapClaims{}
 	permissions["authorized"] = true
 	permissions["userID"] = user.ID
-	permissions["exp"] = time.Now().Add(time.Hour * 4).Unix()
+	permissions["exp"] = time.Now().Add(time.Hour * 4).UnixMilli()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, permissions)
 	return token.SignedString([]byte(config.JwtSecretKey))
 }

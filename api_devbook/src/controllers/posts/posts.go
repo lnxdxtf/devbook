@@ -111,13 +111,13 @@ func GetRandom(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	post, err := repository.GetRandom()
+	posts, err := repository.GetRandom()
 	if err != nil {
 		responses.ResponseError(w, http.StatusInternalServerError, err)
 		return
 	}
-	
-	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: post})
+
+	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: posts})
 }
 
 func Get(w http.ResponseWriter, r *http.Request) {

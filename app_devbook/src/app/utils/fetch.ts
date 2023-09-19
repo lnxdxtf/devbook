@@ -25,7 +25,7 @@ export interface RequestOptions {
     body?: BodyInit | Object
 }
 
-export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<ResponseJsonSuccess | ResponseJsonError> {
+export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<ResponseJsonSuccess | ResponseJsonError | undefined> {
     let baseHeaders: Headers | any
     if (req_opt.headers) {
         baseHeaders = { 'Content-Type': 'application/json' }
@@ -45,6 +45,7 @@ export async function fetchAPIDevBook(req_opt: RequestOptions): Promise<Response
         const response = await fetch(`${import.meta.env.VITE_API_DEVBOOK}${req_opt.path}`, options)
 
         if (response.ok) {
+            if (response.status === 204) return
             return await response.json() as ResponseJsonSuccess
         } else {
             try {

@@ -12,6 +12,13 @@ export interface PostDevBookAPI {
     created_at: string | Date,
 }
 
+export interface RandomUserDevBookAPI {
+    id: number,
+    name: string,
+    nick: string,
+    email: string,
+    created_at: string | Date,}
+
 /**
  * This interface is used to define the User class.
  * Login is a required method, but logout and other properties are optional.
@@ -22,6 +29,7 @@ export interface UserDevBookAPI {
     nick?: string,
     email?: string,
     token?: string,
+    token_exp?: number,
     created_at?: string | Date,
 }
 /**

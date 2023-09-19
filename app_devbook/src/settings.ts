@@ -16,11 +16,23 @@ async function settings(app: App<Element>) {
     })
 
     app.directive('timePassed', timePassed)
+    
+    await userSettings()
     setListeners()
 }
 
 function setListeners() {
     window.addEventListener("resize", () => { store.commit("SET_ISMOBILE", document.body.offsetWidth < 1024) })
+}
+
+/**
+ * Check if user is logged and set the user data in store
+ * @returns void
+*/
+
+async function userSettings() {
+    store.dispatch('user/GetUserLoggedAction')
+    await store.dispatch('user/GetRandomUsersAction')
 }
 
 export default settings

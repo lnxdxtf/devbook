@@ -84,6 +84,35 @@ func (r *Repository) GetAll(nickOrName string) ([]models_user.User, error) {
 	return users, nil
 }
 
+func (r *Repository) GetRandom() ([]models_user.User, error) {
+	rows, err := r.db.Query(`
+	SELECT u.id, u.name, u.nick, u.email, u.created_at
+	FROM devbook.users u
+	WHERE u.id NOT IN (
+		SELECT f.follower_id
+		FROM devbook.followers f
+		WHERE f.user_id = 1
+	) AND u.id != 1
+	ORDER BY RAND()
+	LIMIT 5
+	`)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []models_user.User
+	for rows.Next() {
+		var user models_user.User
+		if err = rows.Scan(&user.ID, &user.Name, &user.Nick, &user.Email, &user.CreatedAt); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
 func (r *Repository) GetById(id uint) (models_user.User, error) {
 	defer r.db.Close()
 	rows, err := r.db.Query("SELECT id, name, nick, email, created_at FROM devbook.users WHERE id = ? ", id)
@@ -183,7 +212,7 @@ func (r *Repository) GetPswrd(userID uint) (string, error) {
 	return user.Pswrd, nil
 }
 
-func (r *Repository)UpdatePswrd(userID uint, pswrd string) error {
+func (r *Repository) UpdatePswrd(userID uint, pswrd string) error {
 	statement, err := r.db.Prepare("UPDATE devbook.users SET pswrd = ? WHERE id = ?")
 	if err != nil {
 		return err

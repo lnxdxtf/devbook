@@ -115,6 +115,22 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: result})
 }
 
+func GetRandom(w http.ResponseWriter, r *http.Request) {
+	repository, err := user_repository.NewRepository()
+	if err != nil {
+		responses.ResponseError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	users, err := repository.GetRandom()
+	if err != nil {
+		responses.ResponseError(w, http.StatusInternalServerError, err)
+		return
+	}
+	
+	responses.ResponseHandler(w, http.StatusOK, responses.Response{Data: users})
+}
+
 func Update(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.ParseUint(params["id"], 10, 64)
